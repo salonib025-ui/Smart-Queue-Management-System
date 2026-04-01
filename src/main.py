@@ -1,24 +1,23 @@
 import cv2
-from camera.camera_input import CameraInput
-from src.detection.people_detector import PeopleDetector
+from detection.people_detector import PeopleDetector
 
 
 def main():
 
-    camera = CameraInput(0)
+    cap = cv2.VideoCapture(0)
     detector = PeopleDetector()
 
     while True:
 
-        frame = camera.get_frame()
+        ret, frame = cap.read()
 
-        if frame is None:
+        if not ret:
             break
 
-        # 🔥 Direct detection (no processing)
         detected_frame, count = detector.detect(frame)
 
-        # Display count
+        print("People:", count)
+
         cv2.putText(
             detected_frame,
             f"People Count: {count}",
@@ -29,14 +28,12 @@ def main():
             2
         )
 
-        # Show output
         cv2.imshow("Smart Queue System", detected_frame)
 
-        # Press 'q' to exit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    camera.release()
+    cap.release()
     cv2.destroyAllWindows()
 
 
