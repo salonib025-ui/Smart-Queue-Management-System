@@ -1,39 +1,40 @@
 import cv2
-from camera.camera_input import CameraInput
-
-
-def main():
-    camera = CameraInput(0)
-
-    while True:
-        import cv2
-from camera.camera_input import CameraInput
-from processing.frame_processor import FrameProcessor
+from detection.people_detector import PeopleDetector
 
 
 def main():
 
-    camera = CameraInput(0)
-    processor = FrameProcessor()
+    cap = cv2.VideoCapture(0)
+    detector = PeopleDetector()
 
     while True:
 
-        frame = camera.get_frame()
+        ret, frame = cap.read()
 
-        if frame is None:
+        if not ret:
             break
 
-        processed_frame = processor.process(frame)
+        detected_frame, count = detector.detect(frame)
 
-        # Convert back for display
-        display_frame = cv2.cvtColor(processed_frame, cv2.COLOR_RGB2BGR)
+        print("People:", count)
 
-        cv2.imshow("Smart Queue System", display_frame)
+        cv2.putText(
+            detected_frame,
+            f"People Count: {count}",
+            (20, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 255, 0),
+            2
+        )
+
+        cv2.imshow("Smart Queue System", detected_frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    camera.release()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
