@@ -1,6 +1,6 @@
 import cv2
 from camera.camera_input import CameraInput
-from detection.people_detector import PeopleDetector
+from src.detection.people_detector import PeopleDetector
 
 
 def main():
