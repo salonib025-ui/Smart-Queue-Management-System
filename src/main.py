@@ -1,5 +1,6 @@
 import cv2
 from detection.people_detector import PeopleDetector
+from analytics.queue_analyzer import QueueAnalyzer
 
 
 def main():
