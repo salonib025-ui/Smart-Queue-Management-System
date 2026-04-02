@@ -7,6 +7,7 @@ def main():
 
     cap = cv2.VideoCapture(0)
     detector = PeopleDetector()
+    analyzer = QueueAnalyzer()
 
     while True:
 
