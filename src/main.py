@@ -18,8 +18,12 @@ def main():
 
         detected_frame, count = detector.detect(frame)
 
+        # 🔥 NEW (Queue Analysis)
+        queue_status = analyzer.update(count)
+
         print("People:", count)
 
+        # People Count Display
         cv2.putText(
             detected_frame,
             f"People Count: {count}",
@@ -27,6 +31,17 @@ def main():
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
             (0, 255, 0),
+            2
+        )
+
+        # 🔥 NEW (Queue Status Display)
+        cv2.putText(
+            detected_frame,
+            f"Queue Status: {queue_status}",
+            (20, 80),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 255, 255),
             2
         )
 
