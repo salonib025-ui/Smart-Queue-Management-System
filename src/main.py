@@ -1,13 +1,16 @@
 import cv2
 from detection.people_detector import PeopleDetector
 from analytics.queue_analyzer import QueueAnalyzer
+from analytics.waiting_time import WaitingTimeEstimator
 
 
 def main():
 
     cap = cv2.VideoCapture(0)
+
     detector = PeopleDetector()
     analyzer = QueueAnalyzer()
+    waiting_estimator = WaitingTimeEstimator(service_rate=0.5)
 
     while True:
 
@@ -16,14 +19,18 @@ def main():
         if not ret:
             break
 
+        # Detect people
         detected_frame, count = detector.detect(frame)
 
-        # 🔥 NEW (Queue Analysis)
+        # Analyze queue
         queue_status = analyzer.update(count)
+
+        # Estimate waiting time
+        waiting_time = waiting_estimator.estimate(count)
 
         print("People:", count)
 
-        # People Count Display
+        # Display People Count
         cv2.putText(
             detected_frame,
             f"People Count: {count}",
@@ -34,7 +41,7 @@ def main():
             2
         )
 
-        # 🔥 NEW (Queue Status Display)
+        # Display Queue Status
         cv2.putText(
             detected_frame,
             f"Queue Status: {queue_status}",
@@ -42,6 +49,17 @@ def main():
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
             (0, 255, 255),
+            2
+        )
+
+        # Display Waiting Time
+        cv2.putText(
+            detected_frame,
+            f"Waiting Time: {waiting_time} mins",
+            (20, 120),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (255, 0, 0),
             2
         )
 
