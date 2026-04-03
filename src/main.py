@@ -7,7 +7,8 @@ def main():
 
     cap = cv2.VideoCapture(0)
     detector = PeopleDetector()
-logger = DataLogger()
+    logger = DataLogger()
+
     while True:
 
         ret, frame = cap.read()
@@ -16,20 +17,22 @@ logger = DataLogger()
             break
 
         detected_frame, count = detector.detect(frame)
-# Queue logic
-if count == 0:
-    status = "No Queue"
-elif count <= 3:
-    status = "Short"
-elif count <= 6:
-    status = "Moderate"
-else:
-    status = "Long"
 
-waiting_time = count * 2
+        # Queue logic
+        if count == 0:
+            status = "No Queue"
+        elif count <= 3:
+            status = "Short"
+        elif count <= 6:
+            status = "Moderate"
+        else:
+            status = "Long"
 
-# Save data
-logger.log(count, status, waiting_time)
+        waiting_time = count * 2
+
+        # Save data
+        logger.log(count, status, waiting_time)
+
         print("People:", count)
 
         cv2.putText(
@@ -50,7 +53,7 @@ logger.log(count, status, waiting_time)
     cap.release()
     cv2.destroyAllWindows()
 
-    # ✅ Step 9 Analytics (runs after camera stops)
+    # Analytics after stopping
     visualizer = AnalyticsVisualizer()
     visualizer.plot_people_trend()
     visualizer.plot_waiting_time()
