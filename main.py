@@ -1,14 +1,30 @@
 import cv2
 
 # ==========================
-# Select Camera Source
+# Import Project Modules
 # ==========================
 
-# 0 → Laptop Webcam
-# Change later for CCTV or video file
+from detection.people_detector import PeopleDetector
+from analytics.queue_analyzer import QueueAnalyzer
+from analytics.waiting_time import WaitingTimeEstimator
+from ui.dashboard import Dashboard
+
+
+# ==========================
+# Initialize Modules
+# ==========================
+
+detector = PeopleDetector()
+queue_analyzer = QueueAnalyzer()
+waiting_estimator = WaitingTimeEstimator(service_rate=0.5)
+dashboard = Dashboard()
+
+# ==========================
+# Camera Source
+# ==========================
+
 cap = cv2.VideoCapture(0)
 
-# Check camera opened
 if not cap.isOpened():
     print("Error: Camera not detected")
     exit()
@@ -16,7 +32,7 @@ if not cap.isOpened():
 print("Camera started successfully")
 
 # ==========================
-# Video Streaming Loop
+# Main Loop
 # ==========================
 
 while True:
@@ -26,15 +42,32 @@ while True:
         print("Failed to grab frame")
         break
 
-    # Show live camera feed
-    cv2.imshow("Smart Queue Management - Live Feed", frame)
+    # ===== Step 4: People Detection =====
+    annotated_frame, people_count = detector.detect(frame)
 
-    # Press Q to quit
+    # ===== Step 5: Queue Analysis =====
+    queue_status = queue_analyzer.update(people_count)
+
+    # ===== Step 6: Waiting Time Prediction =====
+    waiting_time = waiting_estimator.estimate(people_count)
+
+    # ===== Step 7: Dashboard UI =====
+    final_frame = dashboard.draw(
+        annotated_frame,
+        people_count,
+        queue_status,
+        waiting_time
+    )
+
+    # ===== Show Output =====
+    cv2.imshow("Smart Queue Management System", final_frame)
+
+    # Press Q to exit
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 # ==========================
-# Release Resources
+# Cleanup
 # ==========================
 
 cap.release()
