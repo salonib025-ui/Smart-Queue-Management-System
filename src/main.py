@@ -1,6 +1,6 @@
 import cv2
 from detection.people_detector import PeopleDetector
-
+from analytics.analytics_visualizer import AnalyticsVisualizer
 
 def main():
 
@@ -35,6 +35,11 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+    visualizer = AnalyticsVisualizer()
+
+visualizer.plot_people_trend()
+visualizer.plot_waiting_time()
+visualizer.peak_time()
 
 
 if __name__ == "__main__":
