@@ -35,11 +35,12 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
-    visualizer = AnalyticsVisualizer()
 
-visualizer.plot_people_trend()
-visualizer.plot_waiting_time()
-visualizer.peak_time()
+    # ✅ Step 9 Analytics (runs after camera stops)
+    visualizer = AnalyticsVisualizer()
+    visualizer.plot_people_trend()
+    visualizer.plot_waiting_time()
+    visualizer.peak_time()
 
 
 if __name__ == "__main__":
