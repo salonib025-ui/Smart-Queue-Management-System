@@ -1,12 +1,13 @@
 import cv2
 from detection.people_detector import PeopleDetector
 from analytics.analytics_visualizer import AnalyticsVisualizer
+from analytics.data_logger import DataLogger
 
 def main():
 
     cap = cv2.VideoCapture(0)
     detector = PeopleDetector()
-
+logger = DataLogger()
     while True:
 
         ret, frame = cap.read()
