@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+plt.ion()
 
 
 class AnalyticsVisualizer:
@@ -21,13 +22,14 @@ class AnalyticsVisualizer:
             return
 
         plt.figure()
-        plt.plot(data["People"])
+        plt.plot(data["People_Count"])
         plt.title("People Count Over Time")
+       
         plt.xlabel("Time Index")
         plt.ylabel("Number of People")
         plt.grid()
 
-        plt.show()
+        plt.show(block=True)
 
     def plot_waiting_time(self):
         data = self.load_data()
@@ -35,21 +37,21 @@ class AnalyticsVisualizer:
             return
 
         plt.figure()
-        plt.plot(data["Waiting"])
+        plt.plot(data["Waiting_Time"])
         plt.title("Waiting Time Over Time")
         plt.xlabel("Time Index")
         plt.ylabel("Waiting Time (mins)")
         plt.grid()
 
-        plt.show()
+        plt.show(block=True)
 
     def peak_time(self):
         data = self.load_data()
         if data is None:
             return
 
-        max_people = data["People"].max()
-        peak_row = data[data["People"] == max_people]
+        max_people = data["People_Count"].max()
+        peak_row = data[data["People_Count"] == max_people]
 
         print("\n🔥 Peak Time Analysis")
         print("Max People:", max_people)

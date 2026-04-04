@@ -79,8 +79,6 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
-    
-    print("Running analytics dashboard...")
 
     # ===== Analytics After Closing =====
     visualizer = AnalyticsVisualizer()
