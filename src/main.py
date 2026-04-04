@@ -3,22 +3,31 @@ import cv2
 from src.detection.people_detector import PeopleDetector
 from src.analytics.queue_analyzer import QueueAnalyzer
 from src.analytics.waiting_time import WaitingTimeEstimator
-from src.analytics.analytics_visualizer import AnalyticsVisualizer
+from src.ai.decision_engine import DecisionEngine
 
 from src.ui.dashboard import Dashboard
 from src.data.data_logger import DataLogger
 
 
+print(DecisionEngine.__module__)
+
+
 def main():
 
-    # ===== Modules =====
+    # =========================
+    # Initialize Modules
+    # =========================
     detector = PeopleDetector()
     queue_analyzer = QueueAnalyzer()
     waiting_estimator = WaitingTimeEstimator(service_rate=0.5)
+    decision_engine = DecisionEngine()
+
     dashboard = Dashboard()
     logger = DataLogger()
 
-    # ===== Camera =====
+    # =========================
+    # Camera Setup
+    # =========================
     cap = cv2.VideoCapture(0)
 
     cv2.namedWindow("Smart Queue Management System", cv2.WINDOW_NORMAL)
@@ -36,61 +45,65 @@ def main():
 
     print("Camera started successfully")
 
-    # ===== Main Loop =====
+    # =========================
+    # Main Loop
+    # =========================
     while True:
 
         ret, frame = cap.read()
         if not ret:
             break
 
-        # People Detection
+        # --- People Detection ---
         detected_frame, people_count = detector.detect(frame)
 
-        # Queue Analysis
+        # --- Queue Analysis ---
         queue_status = queue_analyzer.update(people_count)
 
-        # Waiting Time Prediction
+        # --- Waiting Time ---
         waiting_time = waiting_estimator.estimate(people_count)
 
-        # Save Data
-        logger.log(people_count, queue_status, waiting_time)
-
-        print("People:", people_count)
-
-        # Overlay UI
-        final_frame = dashboard.draw(
-            detected_frame,
+        # --- Smart Decision Engine ---
+        decision = decision_engine.make_decision(
             people_count,
             queue_status,
             waiting_time
         )
 
-        # Separate Dashboard
+        # --- Log Data ---
+        logger.log(people_count, queue_status, waiting_time)
+
+        print(
+            f"People: {people_count} | "
+            f"Status: {queue_status} | "
+            f"Waiting: {waiting_time:.1f} | "
+            f"Decision: {decision}"
+        )
+
+        # =========================
+        # SHOW WINDOWS
+        # =========================
+
+        # Camera → ONLY video
+        cv2.imshow("Smart Queue Management System", detected_frame)
+
+        # Dashboard → ALL analytics
         dashboard.show_dashboard(
             people_count,
             queue_status,
-            waiting_time
+            waiting_time,
+            decision
         )
 
-        cv2.imshow("Smart Queue Management System", final_frame)
-
+        # Exit Key
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv2.destroyAllWindows()
     
-    print("Running analytics dashboard...")
-
-    # ===== Analytics After Closing =====
-    visualizer = AnalyticsVisualizer()
-    visualizer.plot_people_trend()
-    visualizer.plot_waiting_time()
-    visualizer.peak_time()
+    logger.show_visualization()
 
 
 if __name__ == "__main__":
     main()
-    
-    
-    
