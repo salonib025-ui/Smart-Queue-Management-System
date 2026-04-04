@@ -1,17 +1,5 @@
 class QueueAnalyzer:
 
-<<<<<<< HEAD
-    def analyze(self, people_count):
-
-        if people_count == 0:
-            return "No Queue"
-        elif people_count <= 3:
-            return "Short"
-        elif people_count <= 6:
-            return "Moderate"
-        else:
-            return "Long"
-=======
     def __init__(self):
         self.history = []
 
@@ -20,7 +8,7 @@ class QueueAnalyzer:
         # Store recent counts
         self.history.append(people_count)
 
-        # Keep only last 30 values
+        # Keep last 30 values
         if len(self.history) > 30:
             self.history.pop(0)
 
@@ -41,4 +29,3 @@ class QueueAnalyzer:
 
         else:
             return "Long Queue"
->>>>>>> a0a44b523fb1c07881eefd634b0b8a84b39377ed
