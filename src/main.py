@@ -1,12 +1,12 @@
 import cv2
 
-from detection.people_detector import PeopleDetector
-from analytics.queue_analyzer import QueueAnalyzer
-from analytics.waiting_time import WaitingTimeEstimator
-from analytics.analytics_visualizer import AnalyticsVisualizer
+from src.detection.people_detector import PeopleDetector
+from src.analytics.queue_analyzer import QueueAnalyzer
+from src.analytics.waiting_time import WaitingTimeEstimator
+from src.analytics.analytics_visualizer import AnalyticsVisualizer
 
-from ui.dashboard import Dashboard
-from data.data_logger import DataLogger
+from src.ui.dashboard import Dashboard
+from src.data.data_logger import DataLogger
 
 
 def main():
@@ -89,3 +89,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    
