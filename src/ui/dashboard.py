@@ -1,64 +1,22 @@
 import cv2
+import numpy as np
 
 class Dashboard:
 
-<<<<<<< HEAD
-    def display(self, frame, count, status, wait):
+    def create_dashboard(self, count, status, wait):
 
-        cv2.putText(frame, f"People: {count}", (20, 40),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+        dashboard = np.zeros((300, 500, 3), dtype=np.uint8)
 
-        cv2.putText(frame, f"Queue: {status}", (20, 80),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
+        cv2.putText(dashboard, "SMART QUEUE DASHBOARD", (20, 40),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 2)
 
-        cv2.putText(frame, f"Wait: {wait} min", (20, 120),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
-=======
-    def draw(self, frame, people_count, queue_status, waiting_time):
+        cv2.putText(dashboard, f"People Count: {count}", (20, 100),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,255,0), 2)
 
-        # ===== Title =====
-        cv2.putText(
-            frame,
-            "AI Smart Queue Management System",
-            (20, 30),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.8,
-            (255, 255, 0),
-            2
-        )
+        cv2.putText(dashboard, f"Queue Status: {status}", (20, 150),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
 
-        # ===== People Count =====
-        cv2.putText(
-            frame,
-            f"People: {people_count}",
-            (20, 70),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.7,
-            (0, 255, 0),
-            2
-        )
+        cv2.putText(dashboard, f"Waiting Time: {wait} min", (20, 200),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
 
-        # ===== Queue Status =====
-        cv2.putText(
-            frame,
-            f"Queue Status: {queue_status}",
-            (20, 110),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.7,
-            (0, 255, 255),
-            2
-        )
-
-        # ===== Waiting Time =====
-        cv2.putText(
-            frame,
-            f"Waiting Time: {waiting_time} mins",
-            (20, 150),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.7,
-            (255, 0, 0),
-            2
-        )
->>>>>>> a0a44b523fb1c07881eefd634b0b8a84b39377ed
-
-        return frame
+        return dashboard
