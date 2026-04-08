@@ -1,6 +1,6 @@
 class QueueAnalyzer:
 
-<<<<<<< HEAD
+
     def analyze(self, people_count):
 
         if people_count == 0:
@@ -11,7 +11,7 @@ class QueueAnalyzer:
             return "Moderate"
         else:
             return "Long"
-=======
+
     def __init__(self):
         self.history = []
 
@@ -41,4 +41,4 @@ class QueueAnalyzer:
 
         else:
             return "Long Queue"
->>>>>>> 4ad1d51ca5fc7882d79953ababdad8a15a44ef2e
+

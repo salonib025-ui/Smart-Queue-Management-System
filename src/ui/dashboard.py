@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-<<<<<<< HEAD
+
 
 class Dashboard:
 
@@ -21,7 +21,7 @@ class Dashboard:
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
 
         return dashboard
-=======
+
 
 
 class Dashboard:
@@ -90,4 +90,3 @@ class Dashboard:
         )
 
         cv2.imshow("Smart Queue Dashboard", self.dashboard)
->>>>>>> 4ad1d51ca5fc7882d79953ababdad8a15a44ef2e
