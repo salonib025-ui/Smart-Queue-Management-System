@@ -73,19 +73,19 @@ def main():
         detected_frame, people_count = detector.detect(frame)
 
 
-        status = analyzer.analyze(count)
-        wait_time = estimator.estimate(count)
+        status = analyzer.analyze(people_count)
+        wait_time = estimator.estimate(people_count)
 
         alert_message = ""
 
-        if count > 6:
+        if people_count > 6:
             alert_message = "ALERT: Queue Too Long!"
 
-        print("People:", count)
+        print("People:", people_count)
         print("Queue:", status)
         print("Waiting Time:", wait_time)
 
-        dashboard_frame = dashboard.create_dashboard(count, status, wait_time)
+        dashboard_frame = dashboard.create_dashboard(people_count, status, wait_time)
 
         if alert_message != "":
             cv2.putText(detected_frame, alert_message, (20,80),
