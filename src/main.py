@@ -1,10 +1,10 @@
 import cv2
-<<<<<<< HEAD
+
 from detection.people_detector import PeopleDetector
 from analytics.queue_analyzer import QueueAnalyzer
 from analytics.waiting_time import WaitingTimeEstimator
 from ui.dashboard import Dashboard
-=======
+
 
 from src.detection.people_detector import PeopleDetector
 from src.analytics.queue_analyzer import QueueAnalyzer
@@ -16,19 +16,18 @@ from src.data.data_logger import DataLogger
 
 
 print(DecisionEngine.__module__)
->>>>>>> 4ad1d51ca5fc7882d79953ababdad8a15a44ef2e
 
 
 def main():
 
-<<<<<<< HEAD
+
     cap = cv2.VideoCapture(0)
 
     detector = PeopleDetector()
     analyzer = QueueAnalyzer()
     estimator = WaitingTimeEstimator()
     dashboard = Dashboard()
-=======
+
     # =========================
     # Initialize Modules
     # =========================
@@ -36,7 +35,7 @@ def main():
     queue_analyzer = QueueAnalyzer()
     waiting_estimator = WaitingTimeEstimator(service_rate=0.5)
     decision_engine = DecisionEngine()
->>>>>>> 4ad1d51ca5fc7882d79953ababdad8a15a44ef2e
+
 
     dashboard = Dashboard()
     logger = DataLogger()
@@ -73,7 +72,7 @@ def main():
         # --- People Detection ---
         detected_frame, people_count = detector.detect(frame)
 
-<<<<<<< HEAD
+
         status = analyzer.analyze(count)
         wait_time = estimator.estimate(count)
 
@@ -97,7 +96,7 @@ def main():
 
         cv2.imshow("Camera Feed", detected_frame)
         cv2.imshow("Dashboard", dashboard_frame)
-=======
+
         # --- Queue Analysis ---
         queue_status = queue_analyzer.update(people_count)
 
@@ -113,7 +112,7 @@ def main():
 
         # --- Log Data ---
         logger.log(people_count, queue_status, waiting_time)
->>>>>>> 4ad1d51ca5fc7882d79953ababdad8a15a44ef2e
+
 
         print(
             f"People: {people_count} | "
