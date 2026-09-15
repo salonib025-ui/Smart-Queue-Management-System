@@ -9,13 +9,7 @@ class FrameProcessor:
 
     def process(self, frame):
         """
-        Process incoming frame before AI detection
+        Resize incoming frame for inference speed optimization.
         """
-
-        # Resize frame (speed improvement)
         frame = cv2.resize(frame, (self.width, self.height))
-
-        # Convert color (optional optimization)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
         return frame

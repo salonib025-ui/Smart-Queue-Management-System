@@ -4,10 +4,6 @@ class WaitingTimeEstimator:
         self.service_rate = service_rate
 
     def estimate(self, people_count):
-
-
-        return people_count * 2
-
         if people_count == 0:
             return 0
 
